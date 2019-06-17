@@ -4,12 +4,10 @@ module.exports = function (app) {
 
 	console.log('This is from apiRoutes.js module.exports');
 
-	// app.get("/api/friends", function(req, res) {
-	app.get("/api/friends", (req, res)=>{
+	app.get("/api/friends", (req, res) => {
 		res.json(friends);
-	}); // end of app.get for /api/friends
-
-	app.post("/api/friends", function(req, res) {
+	});
+	app.post("/api/friends", function (req, res) {
 
 		var bestMatch = {
 			name: "",
@@ -17,47 +15,37 @@ module.exports = function (app) {
 			friendDifference: 1000
 		};
 
-		// Take result of user's survey POST and parse it.
-		var userData 	= req.body;
-		var userScores	= userData.scores;
+
+		var userData = req.body;
+		var userScores = userData.scores;
 
 		console.log('userscores', req.body);
 
-		// Calculate difference between scores from user and scores from database
 		var totalDifference = 0;
 
-		// Loop through all the friend possibilities in database.
 		for (var i = 0; i < friends.length; i++) {
 
 			console.log(friends[i]);
-			// totalDifference = 0;
 
-			// Loop through scores of each friend
 			for (var j = 0; j < friends[i].scores[j]; j++) {
 
-				// Calculate difference between scores and add them up
 				totalDifference += Math.abs(parseInt(userScores[j]) - parseInt(friends[i].scores[j]));
-				//???
-				// totalDifference = 10;
 				console.log('totalDifference = ' + totalDifference);
 
-				// If sum of differences is
-				// less than differences of current "best match"
 				if (totalDifference <= bestMatch.friendDifference) {
 
-						// Reset best match to new friend.
-						bestMatch.name				= friends[i].name;
-						bestMatch.photo				= friends[i].photo;
-						bestMatch.friendDifference	= totalDifference;
-				} // end of if totalDifference statement
-			} // end of loop through friend scores
-		} 
+					bestMatch.name = friends[i].name;
+					bestMatch.photo = friends[i].photo;
+					bestMatch.friendDifference = totalDifference;
+				}
+			}
+		}
 
-		
+
 		friends.push(userData);
 
-		
+
 		res.json(bestMatch);
 	});
-	
+
 } 
