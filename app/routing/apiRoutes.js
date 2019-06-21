@@ -5,7 +5,7 @@ module.exports = function (app) {
 	console.log('This is from apiRoutes.js module.exports');
 
 	app.get("/api/friends", (req, res) => {
-		res.json(friends);
+		res.json(res);
 	});
 	app.post("/api/friends", function (req, res) {
 

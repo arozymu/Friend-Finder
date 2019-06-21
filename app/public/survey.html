@@ -203,7 +203,8 @@
             $(selector).chosen(config[selector]);
         }
 
-        $("#submit").on("click", function () {
+        $("#submit").on("click", function (event) {
+            event.preventDefault();
             console.log('This is from survey.html - User clicked submit button.');
 
             function validateForm() {
@@ -228,8 +229,8 @@
                 }
                 console.log('userData from view: ', userData);
 
-                var currentURL = window.location.origin;
-                $.post(currentURL + "/api/friends", userData, function (data) {
+                // var currentURL = window.location.origin;
+                $.post("/api/friends", userData, function (data) {
                     $("#matchName").text(data.name);
                     $('#matchImg').attr("src", data.photo);
                     $("#resultsModal").modal('toggle');
